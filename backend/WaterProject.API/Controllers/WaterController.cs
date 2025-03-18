@@ -16,6 +16,17 @@ public class WaterController : ControllerBase
       [HttpGet("AllProjects")]
       public IActionResult GetProjects(int pageHowMany = 10, int pageNum=1)
       {
+            string? favProjType = Request.Cookies["FavoriteProjectType"];
+            Console.WriteLine("~~~~~COOKIE~~~~\n" + favProjType);
+
+            HttpContext.Response.Cookies.Append("FavoriteProjectType", "Protected Spring", new CookieOptions
+            {
+                  HttpOnly = true,//only be seen by server. not part of DOM
+                  Secure = true,
+                  SameSite = SameSiteMode.Strict,
+                  Expires = DateTime.Now.AddMinutes(4),
+            });
+
             var something = _waterContext.Projects
             .Skip((pageNum-1)* pageHowMany) //shows 10 if pageNum is 10. If it is page 2, skip 10, then take the next 10
             .Take(pageHowMany)
