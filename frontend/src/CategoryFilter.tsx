@@ -9,7 +9,7 @@ function CategoryFilter({
   setSelectedCategories: (categories: string[]) => void;
 }) {
   //list of categories
-  const [categories, setCateogories] = useState<string[]>([]); //remember default state
+  const [categories, setCategories] = useState<string[]>([]); //remember default state
 
   //consuming categories
   useEffect(() => {
@@ -20,7 +20,7 @@ function CategoryFilter({
         );
         const data = await response.json(); //getting the json out of it
         console.log('Fetched categories: ', data); //some more error handling
-        setCateogories(data);
+        setCategories(data);
       } catch (error) {
         console.error('Error fetching categories', error);
       }
